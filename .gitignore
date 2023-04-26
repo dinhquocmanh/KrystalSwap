@@ -1,0 +1,6 @@
+build/
+dist/
+venv/
+*.log
+*.exe
+wallets.txt
