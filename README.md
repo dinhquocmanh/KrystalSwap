@@ -56,4 +56,11 @@ https://stackoverflow.com/questions/404744/determining-application-path-in-a-pyt
 
 Command to exe: 
 pyinstaller main.py --onefile
-cp dist/main.exe main.exe
+cp dist/main.exe main.exe.
+
+
+
+https://ftmscan.com/tx/0x9aa1b52b8e7b343c22c36f5d2a2a59241e505208488bca51637f30c9d878b0af
+https://ftmscan.com/tx/0xae45dcf082940dbac3cf1d8269ed47c5d84e715732d9b75ab4f2531aeb8907ed
+contract decode bydata here
+https://ftmscan.com/address/0x617dee16b86534a5d792a4d7a62fb491b544111e#code
