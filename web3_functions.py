@@ -408,8 +408,9 @@ def swap_usdc_to_dai_1010u(account):
     """Use smart swap router to swap""" 
     # configs informations
     userAddress=account.address.lower() # account owner
-    dest="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap from this token
-    src="0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E".lower() # swap to this token
+    src="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap to this token dai
+    dest="0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E".lower() # swap from this token usdc
+    
     srcAmount=int(1*10**6)   # swap amount input
     minDestAmount=int(srcAmount*10**12*0.9) # 90% sliprate
     extraArgs = build_tx(user_address=userAddress,src=src, destination=dest, srcAmount=srcAmount,minDestAmount=minDestAmount)
@@ -422,8 +423,10 @@ def swap_dai_to_usdc_1010u(account):
     """Use smart swap router to swap""" 
     # configs informations
     userAddress=account.address.lower() # account owner
-    dest="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap from this token
+    
     src="0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E".lower() # swap to this token
+    dest="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap from this token
+    
     srcAmount=int(1*10**18)   # swap amount input
     minDestAmount=int(srcAmount/10**12*0.9) # 90% sliprate
     extraArgs = build_tx(user_address=userAddress,src=src, destination=dest, srcAmount=srcAmount,minDestAmount=minDestAmount)

@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #logger.info("Address: {} | FTM balance: {} | USDC balance: {} | DAI balance: {}".format(b.address, ftm_balance/10**18, usdc_balance/10**6, dai_balance/10**18))
     #transfer_token(a, b, 'usdc', usdc_balance)
     #transfer_token(a, b, 'ftm', ftm_balance)
-    #transfer_all(a,b)
+    transfer_all(b,a)
     #swap_dai_to_usdc_1u(a)
     #time.sleep(7)
     # swap_dai_to_usdc_1010u(b)
@@ -31,6 +31,6 @@ if __name__ == "__main__":
     minDestAmount=int(srcAmount/10**12*0.9) # 90% sliprate
     extraArgs = build_tx(user_address=userAddress,src=src, destination=dest, srcAmount=srcAmount,minDestAmount=minDestAmount)
     extraArgs = "0x" + extraArgs[842:]
-    print(extraArgs)
+    #print(extraArgs)
     # send txs
-    swap_krystal_custom(account=b, src=src, dest=dest, srcAmount=srcAmount, minDestAmount=minDestAmount, extraArgs=extraArgs)
+    #swap_krystal_custom(account=b, src=src, dest=dest, srcAmount=srcAmount, minDestAmount=minDestAmount, extraArgs=extraArgs)
