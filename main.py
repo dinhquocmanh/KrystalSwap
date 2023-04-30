@@ -89,12 +89,12 @@ if __name__ == "__main__":
             time.sleep(delay)
 
             # swap usdc to dai
-            swap_usdc_to_dai_1010u(a, usdc_balance) # B4
+            swap_usdc_to_dai_1010u(a) # B4
             time.sleep(delay)
 
             # check balance again an swap back
             ftm_balance, usdc_balance, dai_balance =  check_balance(a) 
-            swap_dai_to_usdc_1010u(a, dai_balance) # B5
+            swap_dai_to_usdc_1010u(a) # B5
             time.sleep(delay)
 
             # check balance
