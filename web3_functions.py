@@ -11,6 +11,7 @@ import requests
 load_dotenv('input/config.env')
 logger.info("[+] Load input/config.env success.")
 PHANTOM_HTTP_PROVIDER=os.getenv('PHANTOM_HTTP_PROVIDER')
+GAS_PRICE=os.getenv('CONFIG_GAS_PRICE')
 w3 = Web3(Web3.HTTPProvider(PHANTOM_HTTP_PROVIDER))
 if w3.is_connected():
     logger.info("[+] Connect to FANTOM network success.")
@@ -61,7 +62,7 @@ def swap_ftm_to_usdc(account, amount_ftm):
 
     tx = smartrouter_contract.functions.swap(params).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 500000,
         'value' :  w3.to_wei(amount_ftm, 'ether'),
@@ -110,7 +111,7 @@ def swap_usdc_to_ftm(account, amount_usdc):
 
     tx = smartrouter_contract.functions.swap(params).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 500000,
         #'value' :  w3.to_wei(amount_usdc, 'get') # 10^6
@@ -150,7 +151,7 @@ def swap_dai_to_usdc(account, amount_ftm_in_wei):
 
     tx = smartrouter_contract.functions.swap(params).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 500000,
         }
@@ -187,7 +188,7 @@ def swap_krystal_custom(account,src, dest, srcAmount, minDestAmount, extraArgs):
 
     tx = smartrouter_contract.functions.swap(params).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 500000,
         }
@@ -225,7 +226,7 @@ def swap_usdc_to_dai(account, amount_usdc_in_wei):
 
     tx = smartrouter_contract.functions.swap(params).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 500000,
         #'value' :  w3.to_wei(amount_usdc, 'get') # 10^6
@@ -256,7 +257,7 @@ def approve_usdc(account):
 
     approve_tx = contract.functions.approve(SmartWalletProxy, balance_to_approve).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 300000
     })
@@ -283,7 +284,7 @@ def approve_dai(account):
 
     approve_tx = contract.functions.approve(SmartWalletProxy, balance_to_approve).build_transaction({
         'from': account.address,
-        'gasPrice': w3.to_wei(500,'gwei'),
+        'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
         'nonce': nonce,
         'gas': 300000
     })
@@ -330,7 +331,7 @@ def transfer_token(from_account, to_account, token_name, amount_in_wei, nonce=-1
     if token_name == "usdc":
         send_tx = contract_usdc.functions.transfer(to_account.address, amount_in_wei).build_transaction({
             'from': from_account.address,
-            'gasPrice': w3.to_wei(500,'gwei'),
+            'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
             'nonce': nonce,
             'gas': 300000
         })
@@ -347,7 +348,7 @@ def transfer_token(from_account, to_account, token_name, amount_in_wei, nonce=-1
         send_tx = {
             'from': from_account.address,
             'to': to_account.address,
-            'gasPrice': w3.to_wei(300,'gwei'),
+            'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
             'nonce': nonce,
             'gas': 100000,
             'value': amount_in_wei-100000*w3.to_wei(300,'gwei'),
@@ -364,7 +365,7 @@ def transfer_token(from_account, to_account, token_name, amount_in_wei, nonce=-1
     if token_name == "dai":
         send_tx = contract_dai.functions.transfer(to_account.address, amount_in_wei).build_transaction({
             'from': from_account.address,
-            'gasPrice': w3.to_wei(500,'gwei'),
+            'gasPrice': w3.to_wei(GAS_PRICE,'gwei'),
             'nonce': nonce,
             'gas': 300000
         })
@@ -411,7 +412,7 @@ def swap_usdc_to_dai_1010u(account):
     src="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap to this token dai
     dest="0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E".lower() # swap from this token usdc
     
-    srcAmount=int(1*10**6)   # swap amount input
+    srcAmount=int(1010*10**6)   # swap amount input
     minDestAmount=int(srcAmount*10**12*0.9) # 90% sliprate
     extraArgs = build_tx(user_address=userAddress,src=src, destination=dest, srcAmount=srcAmount,minDestAmount=minDestAmount)
     extraArgs = "0x" + extraArgs[842:]
@@ -423,11 +424,11 @@ def swap_dai_to_usdc_1010u(account):
     """Use smart swap router to swap""" 
     # configs informations
     userAddress=account.address.lower() # account owner
-    
+
     src="0x8D11eC38a3EB5E956B052f67Da8Bdc9bef8Abf3E".lower() # swap to this token
     dest="0x04068DA6C83AFCFA0e13ba15A6696662335D5B75".lower() # swap from this token
     
-    srcAmount=int(1*10**18)   # swap amount input
+    srcAmount=int(1010*10**18)   # swap amount input
     minDestAmount=int(srcAmount/10**12*0.9) # 90% sliprate
     extraArgs = build_tx(user_address=userAddress,src=src, destination=dest, srcAmount=srcAmount,minDestAmount=minDestAmount)
     extraArgs = "0x" + extraArgs[842:]
