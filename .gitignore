@@ -4,3 +4,4 @@ venv/
 *.log
 *.exe
 wallets.txt
+__pycache__/
