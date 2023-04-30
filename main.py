@@ -56,12 +56,23 @@ logo="""                                               _
   \__, |\__,_|\___/ \___|_| |_| |_|\__,_|_| |_|_| |_(_) .__/|_|  \___/ 
      |_|                                              |_|              
 """
+import requests
+def check_version():
+    version = '1.0.1'
+    r = requests.get('https://raw.githubusercontent.com/dinhquocmanh/KrystalSwap/main/version')
+    if r.text == version:
+        logger.info(f"Version: {version}")
+    else:
+        logger.info(f"Please update to latest version")
+        sys.exit()
+
 if __name__ == "__main__":
     accounts = read_input()
     logger.info('[+] Loaded total: {} accounts'.format(len(accounts))) 
     
       
     print(logo)
+    check_version()
 
     choice, options = user_input()
 
