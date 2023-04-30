@@ -377,6 +377,31 @@ def transfer_token(from_account, to_account, token_name, amount_in_wei, nonce=-1
         except Exception as e:
             logger.info(e) 
         
+def build_tx(user_address, src, destination, srcAmount, minDestAmount):
+    """Build transaction Krystal request
+    return: ExtraArgs"""
+    # user_address="0x277cc8233544f2689b8adcd2a763195dc713f18a"
+    # destination="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
+    # src="0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
+    platformWallet="0x168E4c3AC8d89B00958B6bE6400B066f0347DDc9"
+    # srcAmount="1000000000000000000"
+    # minDestAmount="549702"
+    hint="0x5b7b226964223a224b72797374616c20536d61727453776170222c2273706c697456616c7565223a31303030307d5d"
+    gasPrice="0"
+    url = "https://api.krystal.app/fantom/v2/swap/buildTx?userAddress={}&dest={}&src={}&platformWallet={}&srcAmount={}&minDestAmount={}&hint={}&gasPrice={}&nonce=1".format(
+        user_address,
+        destination,
+        src,
+        platformWallet,
+        srcAmount,
+        minDestAmount,
+        hint,
+        gasPrice,
+    )
+
+    r = requests.get(url)
+    rjs = json.loads(r.text)
+    return rjs['txObject']['data']
 
 def swap_usdc_to_dai_1010u(account):
     """Swap 1010 usdc to dai"""
@@ -433,29 +458,3 @@ def transfer_all(a, b):
     ftm_balance, usdc_balance, dai_balance =  check_balance(a)
     logger.info("Address: {} | FTM balance: {} | USDC balance: {} | DAI balance: {}".format(a.address, ftm_balance/10**18, usdc_balance/10**6, dai_balance/10**18))
     logger.info("Tranfer all success")
-
-def build_tx(user_address, src, destination, srcAmount, minDestAmount):
-    """Build transaction Krystal request
-    return: ExtraArgs"""
-    # user_address="0x277cc8233544f2689b8adcd2a763195dc713f18a"
-    # destination="0x04068da6c83afcfa0e13ba15a6696662335d5b75"
-    # src="0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e"
-    platformWallet="0x168E4c3AC8d89B00958B6bE6400B066f0347DDc9"
-    # srcAmount="1000000000000000000"
-    # minDestAmount="549702"
-    hint="0x5b7b226964223a224b72797374616c20536d61727453776170222c2273706c697456616c7565223a31303030307d5d"
-    gasPrice="0"
-    url = "https://api.krystal.app/fantom/v2/swap/buildTx?userAddress={}&dest={}&src={}&platformWallet={}&srcAmount={}&minDestAmount={}&hint={}&gasPrice={}&nonce=1".format(
-        user_address,
-        destination,
-        src,
-        platformWallet,
-        srcAmount,
-        minDestAmount,
-        hint,
-        gasPrice,
-    )
-
-    r = requests.get(url)
-    rjs = json.loads(r.text)
-    return rjs['txObject']['data']
